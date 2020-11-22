@@ -36,6 +36,13 @@ import {KeyboardDatePicker} from '@material-ui/pickers';
 export const ReportSearchForm: React.FC<PropsFormType> =({onSubmitForm})=>{
  
   const classes = useStyles();
+
+  const initialValues={
+    from: new Date().toISOString().slice(0,10),
+    to: new Date().toISOString().slice(0,10),
+    interval: '',
+    target: [],
+  };
   
   const submit =(values : RequestValuesType)=> {
 
@@ -45,40 +52,44 @@ export const ReportSearchForm: React.FC<PropsFormType> =({onSubmitForm})=>{
     return (
 
           <Formik
-            initialValues={{
-              from: new Date().toISOString().slice(0,10),
-              to: new Date().toISOString().slice(0,10),
-              interval: '',
-              target: [],
-            }}
-            onSubmit={submit}
+            initialValues={initialValues}
+          //  onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => submit(values)}
+          
           >
-            {({ values, errors, handleChange, handleSubmit, setFieldValue, setFieldError}) => (
-              <Form onSubmit={handleSubmit}>
+            {({values, errors, handleChange, handleSubmit, setFieldValue, setFieldError }) => (
+              <Form>
                 <Box display="flex"  >
-                 {/* <Field name="from" label="От" component={KeyboardDatePicker} className={classes.formControl}  />
+                 <Field 
+                 name="from" 
+                 label="От" 
+                 value={values.from}
+                 component={KeyboardDatePicker} 
+                 className={classes.formControl}  
+                 onChange={(date: Date) => setFieldValue("from", date?.toISOString().slice(0,10), false)}
+                 />
                   <Field name="to" label="До" component={KeyboardDatePicker} />
-                   */}
+                   
 
-      <KeyboardDatePicker
+{/* <KeyboardDatePicker
       clearable
       disableFuture
       name={"from"}
       value={values.from}
       label={"От"}
       format="dd/MM/yyyy"
-      helperText={errors}
-      error={Boolean(errors)}
+   //  helperText={errors}
+     error={Boolean(errors)}
       onError={error => {
         // handle as a side effect
         if (error !== errors) {
-          setFieldError(values.from, errors.from);
+          setFieldError(values.from, "Неверное значение поля");
         }
       }}
-      // if you are using custom validation schema you probably want to pass `true` as third argument
-      onChange={date => setFieldValue(values.from, date?.toISOString().slice(0,10), false)}
+    //  onChange={date => console.log(date)}
+      onChange={date => setFieldValue("from", date?.toISOString().slice(0,10), false)}
       
-    />
+    /> */}
                   <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-label">
                       Интервал
