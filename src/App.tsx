@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { ReportSearchForm } from './components/form/ReportSearchForm';
 import { RequestValuesType } from './models/objects/RequestValues';
@@ -14,6 +14,7 @@ import {fetchData} from "./utils/ApiCalls"
 function App() {
   const [dataFrom, setDataFrom] = useState<string>('pip');
  
+
   const onResponceParamteresChanged = async (values : RequestValuesType) => {
     let {from, to, target, interval} = values;
     setDataFrom(from)
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" >
       <ReportSearchForm onSubmitForm={onResponceParamteresChanged}/>
       </Container>
     </MuiPickersUtilsProvider>

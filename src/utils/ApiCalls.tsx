@@ -1,30 +1,32 @@
-import {fetchDataType} from './../models/functions/Functions';
-import {BASE_BILLING_ADRESS} from './../service/config'
-
-
+import { fetchDataType } from "./../models/functions/Functions";
+import { BASE_BILLING_ADRESS } from "./../service/config";
 
 export const fetchData: fetchDataType = async (searchParams) => {
+  
+  var url = new URL(BASE_BILLING_ADRESS);
 
-    var url = new URL(BASE_BILLING_ADRESS);
-    
-    const {target} = searchParams;
+  const { target } = searchParams;
 
-    console.log(searchParams)
+  Object.keys(searchParams)
+    .filter((key) => key.length > 0)
+    .forEach((key) => {
 
+      if (typeof searchParams[key] === "string") 
+      {
+        url.searchParams.append(key, searchParams[key].toString());
+      } 
+      else
+       {
+        target.forEach((value) => {
+          url.searchParams.append(key, value);
+        });
+      }
+    });
 
-    
-//     Object.keys(searchParams).forEach(key => {
-//       if ((keyof ) !==0){
-      
-//         url.searchParams.append(key, (searchParams[key]))
-//       }
-
-//     fetch(url.toString())
-//     .then(response => response.json())
-// .then(result => {
-//   console.log(result)
-// })
-//             .catch(e => console.log(e));
-          
-            
-  }
+  fetch(url.toString())
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((e) => console.log(e));
+};
