@@ -1,7 +1,9 @@
 export type ChartValue = {
+    [key: string]: string | number | undefined,
     date : string,
-   type1? : number,
-   type2? : number,
-   type3? : number,
-   type4? : number,
+    "Тип 1"? : number,
+    "Тип 2"? : number,
+    "Тип 3"? : number,
+    "Тип 4"? : number,
+    "Тип 5"? : number,
 }

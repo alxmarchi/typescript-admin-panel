@@ -49,17 +49,19 @@ const [misTypes, setMisTypes] = useState<RequestTypeResult[]>([{id:"", displayNa
 const [interval, setInterval] = useState<RequestTypeResult[]>([{id:"", displayName: "",}])  
 const [dataFrom, setDataFrom] = useState<string>('pip');
  
-  useEffect(() => {
-    getIntervals().then((resolve)=>{
-      const interval = resolve.data;
-      setInterval(interval);
-    });
-   getMisTypes()
-   .then((resolve)=>{
-     const misTypes = resolve.data;
-     setMisTypes(misTypes)});
-   setIsLoading(false);
-  }, []);
+useEffect(() => {
+  getIntervals().then((resolve)=>{
+    const interval = resolve;
+    setInterval(interval.data);
+  })
+  .catch((error)=>{console.log(error)});
+ getMisTypes()
+ .then((resolve)=>{
+   const misTypes = resolve.data;
+   setMisTypes(misTypes)})
+   .catch((error)=>{console.log(error)});;
+ setIsLoading(false);
+}, []);
 
   const onResponceParamteresChanged = async (values : RequestValuesType) => {
     let {from} = values;

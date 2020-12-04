@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 
 const chartData2 : ChartValue[] = [
 {date:  new Date().toISOString().slice(0, 10),
-type1: 1}
+"Тип 1": 1}
 ];
 
 export  const Chart: React.FC<chartType> = (chartData) => {
@@ -39,7 +39,7 @@ export  const Chart: React.FC<chartType> = (chartData) => {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Bar dataKey="type1" stackId="a" fill="#8884d8" />
+      <Bar dataKey="Тип 1" stackId="a" fill="#8884d8" />
        </BarChart>
     </ResponsiveContainer>
   )
