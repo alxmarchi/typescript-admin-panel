@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Input from "@material-ui/core/Input";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -31,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm }) => {
+export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm, misTypes, interval }) => {
   const classes = useStyles();
 
   const initialValues = {
     from: new Date().toISOString().slice(0, 10),
     to: new Date().toISOString().slice(0, 10),
     interval: "",
-    target: ["type1", "type2", "type3"],
+    target: [],
   };
 
   const submit = (values: RequestValuesType) => {
@@ -83,22 +84,39 @@ export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm }) => {
               }
             />
             <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Интервал</InputLabel>
+              <InputLabel id="interval-select-label">Интервал</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="interval-select-label"
+                id="interval-select"
                 name="interval"
                 value={values.interval}
                 onChange={handleChange}
               >
-                <MenuItem value={"Auto"}>Авто</MenuItem>
-                <MenuItem value={"Days"}>По дням</MenuItem>
-                <MenuItem value={"Hours"}>По часам</MenuItem>
+                {interval.map((type) => (
+                      <MenuItem key={type.id} value={type.id}>
+                        {type.displayName}
+                      </MenuItem>
+                    ))}
               </Select>
             </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-mutiple-name-label">Типы ИС</InputLabel>
-            </FormControl>
+           <FormControl className={classes.formControl}>
+                  <InputLabel id="mistypes">Типы ИС</InputLabel>
+                  <Select
+                    labelId="mistypes"
+                    id="mistypes"
+                    multiple
+                    name="target"
+                    value={values.target}
+                    onChange={handleChange}
+                    input={<Input />}
+                  >
+                    {misTypes.map((type) => (
+                      <MenuItem key={type.id} value={type.id}>
+                        {type.displayName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl> 
             <Button type="submit" variant="contained" color="primary">
               Получить отчет
             </Button>
