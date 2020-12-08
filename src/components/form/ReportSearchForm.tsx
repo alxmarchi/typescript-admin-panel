@@ -49,7 +49,6 @@ export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm, misTyp
   return (
     <Formik
       initialValues={initialValues}
-      //  onSubmit={(values) => console.log(values)}
       onSubmit={(values) => submit(values)}
     >
       {({
@@ -68,6 +67,7 @@ export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm, misTyp
               value={values.from}
               component={KeyboardDatePicker}
               className={classes.formControl}
+              format="dd/MM/yyyy"
               onChange={(date: Date) =>
                 setFieldValue("from", date?.toISOString().slice(0, 10), false)
               }
@@ -79,6 +79,7 @@ export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm, misTyp
               value={values.to}
               component={KeyboardDatePicker}
               className={classes.formControl}
+              format="dd/MM/yyyy"
               onChange={(date: Date) =>
                 setFieldValue("to", date?.toISOString().slice(0, 10), false)
               }

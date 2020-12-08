@@ -4,16 +4,9 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
-import {
-  useTheme,
-  makeStyles
-} from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import { ChartValue } from '../../models/objects/ChartValue';
 
-const useStyles = makeStyles(() => ({
-  root: {}
-}));
+
 
 
 const chartData2 : ChartValue[] = [
@@ -23,7 +16,7 @@ const chartData2 : ChartValue[] = [
 
 export  const Chart: React.FC<chartType> = (chartData) => {
    
-  console.log(chartData)
+ // console.log(chartData)
 
   return (
     <ResponsiveContainer width="100%" height={400}>

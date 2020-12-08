@@ -6,16 +6,19 @@ import { RequestValuesType } from './models/objects/RequestValues';
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {fetchData, getMisTypes, getIntervals} from "./utils/ApiCalls";
+import theme from './theme';
 import {
   Container,
   Box,
   makeStyles,
-  Grid,
-  Paper
+  Paper,
+  ThemeProvider
 } from '@material-ui/core';
 
 import {RequestTypeResult} from "./models/objects/RequestTypeResult";
-import { resolve } from 'dns';
+import { processingData } from './utils/Processing';
+import GlobalStyles from './GlobalStyles';
+import { AppHeader } from './components/header/Header';
 
 
 
@@ -47,7 +50,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 const [misTypes, setMisTypes] = useState<RequestTypeResult[]>([{id:"", displayName: "",}])
 const [interval, setInterval] = useState<RequestTypeResult[]>([{id:"", displayName: "",}])  
-const [dataFrom, setDataFrom] = useState<string>('pip');
+
  
 useEffect(() => {
   getIntervals().then((resolve)=>{
@@ -64,18 +67,20 @@ useEffect(() => {
 }, []);
 
   const onResponceParamteresChanged = async (values : RequestValuesType) => {
-    let {from} = values;
-    setDataFrom(from)
-  console.log(from);
-  console.log(dataFrom);
+    let {target} = values;
+ console.log(target)
 
   alert(JSON.stringify(values, null, 2));
  const data = await fetchData(values);
  console.log(data)
+ processingData(data, target);
   };
 
   return (
     <div className="app-wrap">
+          <ThemeProvider theme={theme}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+     <AppHeader />  
     <h1>Billing Report</h1>
       {isLoading ?
         <div>loading...</div> :
@@ -83,20 +88,28 @@ useEffect(() => {
     className={classes.root}
     title="Dashboard"
   >
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+   
+<GlobalStyles />
       <Container maxWidth={false} >
       <Container maxWidth="lg" className={classes.container} >
+      <Paper className={classes.paper}>
       <ReportSearchForm 
       misTypes = {misTypes}
       interval = {interval}
       onSubmitForm={onResponceParamteresChanged}
       />
+      </Paper>
       </Container>  
+      <Paper className={classes.paper}>
     <Chart data = {data}/> 
+    </Paper>
       </Container>
-    </MuiPickersUtilsProvider>
+
     </Box>
       }
+      </MuiPickersUtilsProvider>
+    </ThemeProvider>    
       </div>
   );
 }

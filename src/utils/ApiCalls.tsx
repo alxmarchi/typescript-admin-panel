@@ -1,9 +1,5 @@
 import { fetchDataType, ExecuteType } from "./../models/functions/Functions";
 import { BASE_BILLING_ADRESS, BASE_HANDBOOK_ADRESS } from "./../service/config";
-import {QueryResult} from "../models/objects/QueryResult"
-import { RequestTypeResult} from "../models/objects/RequestTypeResult"
-
-//const url = new URL(BASE_BILLING_ADRESS);
 
 
 export const fetchData: fetchDataType = async (searchParams) => {
@@ -33,9 +29,6 @@ else
   });
 }
     });
-   
-     
-
 
     console.log(url.toString())
 
@@ -43,14 +36,12 @@ else
     .then((response) => response.json())
     .catch((e) => console.log(e));
 
-    return responce
+    return responce.data
 };
 
 export const getMisTypes  = async () => {
 
   const misTypes = await getParamsForRequest("MisType");
-
-  console.log(misTypes);
   
   return misTypes;
 }
@@ -58,8 +49,6 @@ export const getMisTypes  = async () => {
 export const getIntervals  = async () => {
 
   const interval = await getParamsForRequest("Interval");
-
-  console.log(interval);
   
   return interval;
 }
