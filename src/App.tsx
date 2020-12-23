@@ -12,13 +12,18 @@ import {
   Box,
   makeStyles,
   Paper,
-  ThemeProvider
+  ThemeProvider,
+  Grid
 } from '@material-ui/core';
 
 import {RequestTypeResult} from "./models/objects/RequestTypeResult";
-import { processingData } from './utils/Processing';
+import { processingData, targetMapping } from './utils/Processing';
 import GlobalStyles from './GlobalStyles';
 import { AppHeader } from './components/header/Header';
+import { ChartValue } from './models/objects/ChartValue';
+import { QueryResult } from './models/objects/QueryResult';
+import { SignalCellularNull } from '@material-ui/icons';
+import ProtocolsByType from './components/protocols-by-type/ProtocolsByType';
 
 
 
@@ -44,14 +49,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = null
+
 function App() {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
 const [misTypes, setMisTypes] = useState<RequestTypeResult[]>([{id:"", displayName: "",}])
 const [interval, setInterval] = useState<RequestTypeResult[]>([{id:"", displayName: "",}])  
+const [chartData, setChartData] = useState<ChartValue[]>([]);
+const [misTarget, setMisTarget] = useState<string[]>([]);
+const [data, setData] = useState<QueryResult[]>([]);
 
- 
 useEffect(() => {
   getIntervals().then((resolve)=>{
     const interval = resolve;
@@ -66,15 +73,27 @@ useEffect(() => {
  setIsLoading(false);
 }, []);
 
+
+
   const onResponceParamteresChanged = async (values : RequestValuesType) => {
     let {target} = values;
  console.log(target)
 
   alert(JSON.stringify(values, null, 2));
- const data = await fetchData(values);
+
+  const data = await fetchData(values);
+
+  setData(data)
+
  console.log(data)
- processingData(data, target);
+ const mappedTarget = targetMapping(target)
+ setMisTarget(mappedTarget)
+ console.log(mappedTarget)
+const chartPoints = processingData(data, mappedTarget);
+setChartData(chartPoints)
+return null
   };
+
 
   return (
     <div className="app-wrap">
@@ -91,8 +110,13 @@ useEffect(() => {
 
    
 <GlobalStyles />
-      <Container maxWidth={false} >
+      {/* </Box><Container maxWidth={false} > */}
       <Container maxWidth="lg" className={classes.container} >
+      <Grid
+          container
+          spacing={3}
+        >
+<Grid item xs={12} spacing={4}>
       <Paper className={classes.paper}>
       <ReportSearchForm 
       misTypes = {misTypes}
@@ -100,10 +124,19 @@ useEffect(() => {
       onSubmitForm={onResponceParamteresChanged}
       />
       </Paper>
-      </Container>  
+      </Grid>
+      <Grid item xs={12} md={8} lg={9}>
       <Paper className={classes.paper}>
-    <Chart data = {data}/> 
+    <Chart 
+    data = {chartData}
+   target ={misTarget}
+    /> 
     </Paper>
+    </Grid>
+    <Grid item xs={10} md={8} lg={3}>
+    <ProtocolsByType/>
+    </Grid>
+    </Grid>
       </Container>
 
     </Box>

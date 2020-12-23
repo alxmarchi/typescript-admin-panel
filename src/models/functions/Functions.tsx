@@ -15,8 +15,8 @@ export type PropsFormType = {
   }
 
 export type chartType = {
-  data : ChartValue[] | null | undefined, 
-  //target: string []
+  data : ChartValue[]  | undefined, 
+  target: string []
 } 
 
 export type  ExecuteType = ( type : string ) => Promise<Message<RequestTypeResult[]>>
