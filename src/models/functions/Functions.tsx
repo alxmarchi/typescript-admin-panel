@@ -3,6 +3,7 @@ import {RequestValuesType} from '../objects/RequestValues';
 import {ChartValue} from "../objects/ChartValue";
 import { RequestTypeResult} from "../objects/RequestTypeResult";
 import { Message } from '../objects/Message';
+import { PieChartValue } from '../objects/PieChartValue';
 
 export type fetchDataType = (queryArgs: RequestValuesType) => Promise<QueryResult[]>;
 
@@ -20,3 +21,8 @@ export type chartType = {
 } 
 
 export type  ExecuteType = ( type : string ) => Promise<Message<RequestTypeResult[]>>
+
+export type PieChartType = {
+  data : PieChartValue[]  | undefined, 
+  
+} 

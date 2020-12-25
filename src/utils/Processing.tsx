@@ -1,8 +1,9 @@
 import { QueryResult } from "../models/objects/QueryResult"
 import { ChartValue } from "../models/objects/ChartValue"
+import { PieChartValue } from "../models/objects/PieChartValue"
 
 
-export const processingData = (fetchData : QueryResult[], target : string[]) : ChartValue[]=> {
+export const processingDataForChart = (fetchData : QueryResult[], target : string[]) : ChartValue[]=> {
     
   console.log(target)
   console.log(fetchData)
@@ -67,4 +68,43 @@ export const targetMapping = (target : string[]) : string[] => {
   }
   
  return mappedTarget
+}
+
+
+
+export const processingDataForTotal = (targetData: QueryResult[]): PieChartValue[] =>{
+
+  const data : PieChartValue[] = []
+
+
+let totalProtocols :number = 0
+
+targetData.forEach((arr)=>{
+
+  const type = arr.targetName
+
+  const dataPointsProtocols = arr.datapoints
+  .map((datapoints) => datapoints[0])
+
+    const sumProtocolsByType = dataPointsProtocols.reduce(
+      (totalCount, recentCount) => totalCount + recentCount) 
+
+    
+      const newData : PieChartValue ={
+        name: type,
+        value: sumProtocolsByType
+      }
+  
+        data.push(newData);
+     
+      
+      totalProtocols+=sumProtocolsByType
+}
+)
+
+console.log(data)
+
+console.log(totalProtocols)
+
+return data
 }

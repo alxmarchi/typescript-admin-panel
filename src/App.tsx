@@ -17,13 +17,13 @@ import {
 } from '@material-ui/core';
 
 import {RequestTypeResult} from "./models/objects/RequestTypeResult";
-import { processingData, targetMapping } from './utils/Processing';
+import { processingDataForTotal, processingDataForChart, targetMapping } from './utils/Processing';
 import GlobalStyles from './GlobalStyles';
 import { AppHeader } from './components/header/Header';
 import { ChartValue } from './models/objects/ChartValue';
 import { QueryResult } from './models/objects/QueryResult';
-import { SignalCellularNull } from '@material-ui/icons';
 import ProtocolsByType from './components/protocols-by-type/ProtocolsByType';
+import { PieChartValue } from './models/objects/PieChartValue';
 
 
 
@@ -58,6 +58,7 @@ const [interval, setInterval] = useState<RequestTypeResult[]>([{id:"", displayNa
 const [chartData, setChartData] = useState<ChartValue[]>([]);
 const [misTarget, setMisTarget] = useState<string[]>([]);
 const [data, setData] = useState<QueryResult[]>([]);
+const [totalByType, setTotalByType] = useState<PieChartValue[]>([]);
 
 useEffect(() => {
   getIntervals().then((resolve)=>{
@@ -86,11 +87,21 @@ useEffect(() => {
   setData(data)
 
  console.log(data)
+ 
  const mappedTarget = targetMapping(target)
+
  setMisTarget(mappedTarget)
+
  console.log(mappedTarget)
-const chartPoints = processingData(data, mappedTarget);
+
+
+const chartPoints = processingDataForChart(data, mappedTarget);
+
 setChartData(chartPoints)
+
+ const dataForTotal =  processingDataForTotal(data)
+
+ setTotalByType(dataForTotal)
 return null
   };
 
@@ -134,7 +145,8 @@ return null
     </Paper>
     </Grid>
     <Grid item xs={10} md={8} lg={3}>
-    <ProtocolsByType/>
+    <ProtocolsByType
+    data={totalByType}/>
     </Grid>
     </Grid>
       </Container>

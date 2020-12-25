@@ -1,11 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 
 import {
-  PieChart, Pie, Sector, Cell, Tooltip
+  PieChart, Pie, Cell, Tooltip
 } from 'recharts';
-
 
 
 import {
@@ -22,14 +20,8 @@ import {
 import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 import PhoneIcon from '@material-ui/icons/Phone';
 import TabletIcon from '@material-ui/icons/Tablet';
-
-const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-  ];
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+import COLORS from '../../theme/colours';
+import { PieChartType } from '../../models/functions/Functions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -37,77 +29,30 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ProtocolsByType = () => {
+const ProtocolsByType : React.FC<PieChartType> = ({data}) => {
+
   const classes = useStyles();
+
   const theme = useTheme();
 
-//   const data = {
-//     datasets: [
-//       {
-//         data: [63, 15, 22],
-//         backgroundColor: [
-//           colors.indigo[500],
-//           colors.red[600],
-//           colors.orange[600]
-//         ],
-//         borderWidth: 8,
-//         borderColor: colors.common.white,
-//         hoverBorderColor: colors.common.white
-//       }
-//     ],
-//     labels: ['Desktop', 'Tablet', 'Mobile']
-//   };
+  const [isLoading, setIsLoading] = useState(true);
 
-//   const options = {
-//     animation: false,
-//     cutoutPercentage: 80,
-//     layout: { padding: 0 },
-//     legend: {
-//       display: false
-//     },
-//     maintainAspectRatio: false,
-//     responsive: true,
-//     tooltips: {
-//       backgroundColor: theme.palette.background.default,
-//       bodyFontColor: theme.palette.text.secondary,
-//       borderColor: theme.palette.divider,
-//       borderWidth: 1,
-//       enabled: true,
-//       footerFontColor: theme.palette.text.secondary,
-//       intersect: false,
-//       mode: 'index',
-//       titleFontColor: theme.palette.text.primary
-//     }
-//   };
+  useEffect(() => {
+   setIsLoading(false);
+  }, data);
 
-  const devices = [
-    {
-      title: 'Desktop',
-      value: 63,
-      icon: LaptopMacIcon,
-      color: colors.indigo[500]
-    },
-    {
-      title: 'Tablet',
-      value: 15,
-      icon: TabletIcon,
-      color: colors.red[600]
-    },
-    {
-      title: 'Mobile',
-      value: 23,
-      icon: PhoneIcon,
-      color: colors.orange[600]
-    }
-  ];
+  
 
   return (
     <Card
       className={clsx(classes.root)}
     >
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Всего протоколов по типу" />
       <Divider />
+      {isLoading ?
+        <div>loading...</div> :
       <CardContent>
+      
       <Box
           display="flex"
           justifyContent="center"
@@ -125,7 +70,7 @@ const ProtocolsByType = () => {
           dataKey="value"
         >
           {
-            data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+            data?.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           }
         </Pie>
         <Tooltip />
@@ -136,26 +81,23 @@ const ProtocolsByType = () => {
           justifyContent="center"
           
         >
-          {devices.map(({
-            color,
-            icon: Icon,
-            title,
+          {data?.map(({
+            name,
             value
-          }) => (
+          }, index) => (
             <Box
-              key={title}
+              key={name}
               p={1}
               textAlign="center"
             >
-              <Icon color="action" />
               <Typography
                 color="textPrimary"
                 variant="body1"
               >
-                {title}
+                {name}
               </Typography>
               <Typography
-                style={{ color }}
+              style={'color' = "ffff"}
                 variant="h2"
               >
                 {value}
@@ -164,13 +106,15 @@ const ProtocolsByType = () => {
             </Box>
           ))}
         </Box>
+
       </CardContent>
+      }
     </Card>
   );
 };
 
-ProtocolsByType.propTypes = {
-  className: PropTypes.string
-};
+// ProtocolsByType.propTypes = {
+//   className: PropTypes.string
+// };
 
 export default ProtocolsByType;
