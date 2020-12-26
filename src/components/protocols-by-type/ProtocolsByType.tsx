@@ -97,7 +97,8 @@ const ProtocolsByType : React.FC<PieChartType> = ({data}) => {
                 {name}
               </Typography>
               <Typography
-              style={'color' = "ffff"}
+              style={}
+              
                 variant="h2"
               >
                 {value}
