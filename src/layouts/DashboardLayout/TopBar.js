@@ -1,58 +1,74 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
-import NavBar from './NavBar';
-import TopBar from './TopBar';
+import { Link as RouterLink } from 'react-router-dom';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import {
+  AppBar,
+  Badge,
+  Box,
+  Hidden,
+  IconButton,
+  Toolbar,
+  makeStyles
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+import InputIcon from '@material-ui/icons/Input';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    display: 'flex',
-    height: '100%',
-    overflow: 'hidden',
-    width: '100%'
-  },
-  wrapper: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden',
-    paddingTop: 64,
-    [theme.breakpoints.up('lg')]: {
-      paddingLeft: 256
-    }
-  },
-  contentContainer: {
-    display: 'flex',
-    flex: '1 1 auto',
-    overflow: 'hidden'
-  },
-  content: {
-    flex: '1 1 auto',
-    height: '100%',
-    overflow: 'auto'
-  }
+
+const useStyles = makeStyles(() => ({
+  root: {},
 }));
 
-const DashboardLayout = () => {
+const TopBar = ({
+  className,
+  onMobileNavOpen,
+  ...rest
+}) => {
   const classes = useStyles();
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  const [notifications] = useState([]);
 
   return (
-    <div className={classes.root}>
-      <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
-      <NavBar
-        onMobileClose={() => setMobileNavOpen(false)}
-        openMobile={isMobileNavOpen}
-      />
-      <div className={classes.wrapper}>
-        <div className={classes.contentContainer}>
-          <div className={classes.content}>
-            <Outlet />
-          </div>
-        </div>
-      </div>
-    </div>
+    <AppBar
+      className={clsx(classes.root, className)}
+      elevation={0}
+      {...rest}
+    >
+      <Toolbar>
+        <RouterLink to="/">
+          
+        </RouterLink>
+        <Box flexGrow={1} />
+        <Hidden mdDown>
+          <IconButton color="inherit">
+            <Badge
+              badgeContent={notifications.length}
+              color="primary"
+              variant="dot"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit">
+            <InputIcon />
+          </IconButton>
+        </Hidden>
+        <Hidden lgUp>
+          <IconButton
+            color="inherit"
+            onClick={onMobileNavOpen}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
+      </Toolbar>
+    </AppBar>
   );
 };
 
-export default DashboardLayout;
+TopBar.propTypes = {
+  className: PropTypes.string,
+  onMobileNavOpen: PropTypes.func
+};
+
+export default TopBar;

@@ -5,7 +5,6 @@ import {
   Box,
   makeStyles,
   Paper,
-  ThemeProvider,
   Grid
 } from '@material-ui/core';
 import { RequestTypeResult } from '../../models/objects/RequestTypeResult';
@@ -15,13 +14,9 @@ import { PieChartValue } from '../../models/objects/PieChartValue';
 import { fetchData, getIntervals, getMisTypes } from '../../utils/ApiCalls';
 import { RequestValuesType } from '../../models/objects/RequestValues';
 import { processingDataForChart, processingDataForTotal, targetMapping } from '../../utils/Processing';
-import theme from '../../theme';
 import { ReportSearchForm } from '../../components/form/ReportSearchForm';
 import { Chart } from '../../components/chart/Chart';
 import ProtocolsByType from '../../components/protocols-by-type/ProtocolsByType';
-
-
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -105,9 +100,7 @@ return null
 
   return (
     <div className="app-wrap">
-          <ThemeProvider theme={theme}>
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-     <AppHeader />  
+
     <h1>Billing Report</h1>
       {isLoading ?
         <div>loading...</div> :
@@ -115,10 +108,6 @@ return null
     className={classes.root}
     title="Dashboard"
   >
-
-   
-<GlobalStyles />
-      {/* </Box><Container maxWidth={false} > */}
       <Container maxWidth="lg" className={classes.container} >
       <Grid
           container
@@ -150,8 +139,7 @@ return null
 
     </Box>
       }
-      </MuiPickersUtilsProvider>
-    </ThemeProvider>    
+ 
       </div>
   );
 }

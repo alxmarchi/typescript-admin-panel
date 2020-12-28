@@ -5,7 +5,6 @@ import {
   PieChart, Pie, Cell, Tooltip
 } from 'recharts';
 
-
 import {
   Box,
   Card,
@@ -13,13 +12,9 @@ import {
   CardHeader,
   Divider,
   Typography,
-  colors,
   makeStyles,
   useTheme
 } from '@material-ui/core';
-import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-import PhoneIcon from '@material-ui/icons/Phone';
-import TabletIcon from '@material-ui/icons/Tablet';
 import COLORS from '../../theme/colours';
 import { PieChartType } from '../../models/functions/Functions';
 
@@ -97,7 +92,7 @@ const ProtocolsByType : React.FC<PieChartType> = ({data}) => {
                 {name}
               </Typography>
               <Typography
-              style={}
+            //  style={}
               
                 variant="h2"
               >
@@ -114,8 +109,5 @@ const ProtocolsByType : React.FC<PieChartType> = ({data}) => {
   );
 };
 
-// ProtocolsByType.propTypes = {
-//   className: PropTypes.string
-// };
 
 export default ProtocolsByType;
