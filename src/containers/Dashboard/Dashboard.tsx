@@ -18,18 +18,112 @@ import { ReportSearchForm } from '../../components/form/ReportSearchForm';
 import { Chart } from '../../components/chart/Chart';
 import ProtocolsByType from '../../components/protocols-by-type/ProtocolsByType';
 
+const testData = {
+  "data": [
+      {
+          "target": "1",
+          "targetName": "Тип 1",
+          "datapoints": [
+              [
+                  3,
+                  1606770000000
+              ],
+              [
+                3,
+                1607780000000
+            ],
+              [
+                1,
+                1609780000000
+            ]
+          ]
+      },
+      {
+          "target": "2",
+          "targetName": "Тип 2",
+          "datapoints": [
+              [
+                  6,
+                  1606770000000
+              ],
+              [
+                11,
+                1607780000000
+            ],
+            [
+              1,
+              1609780000000
+          ]
+          ]
+      },
+      {
+          "target": "3",
+          "targetName": "Тип 3",
+          "datapoints": [
+              [
+                  8,
+                  1606770000000
+              ],
+              [
+                5,
+                1607780000000
+            ],
+            [
+              7,
+              1609780000000
+          ]
+          ]
+      },
+      {
+          "target": "4",
+          "targetName": "Тип 4",
+          "datapoints": [
+              [
+                  2,
+                  1606770000000
+              ],
+              [
+                5,
+                1606770000000
+            ],
+            [
+              10,
+              1609780000000
+          ]
+          ]
+      },
+      {
+          "target": "5",
+          "targetName": "Тип 5",
+          "datapoints": [
+              [
+                  10,
+                  1606770000000
+              ],
+              [
+                1,
+                1606770000000
+            ],
+            [
+              2,
+              1609780000000
+          ]
+          ]
+      }
+  ],
+  "error": null
+};
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    
+    minHeight: '100%',
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3)
   },
-  title: {
-    flexGrow: 1,
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
+
+  
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -87,11 +181,11 @@ useEffect(() => {
  console.log(mappedTarget)
 
 
-const chartPoints = processingDataForChart(data, mappedTarget);
+const chartPoints = processingDataForChart(testData.data, mappedTarget);
 
 setChartData(chartPoints)
 
- const dataForTotal =  processingDataForTotal(data)
+ const dataForTotal =  processingDataForTotal(testData.data)
 
  setTotalByType(dataForTotal)
 return null
@@ -104,11 +198,8 @@ return null
     <h1>Billing Report</h1>
       {isLoading ?
         <div>loading...</div> :
-    <Box
-    className={classes.root}
-    title="Dashboard"
-  >
-      <Container maxWidth="lg" className={classes.container} >
+        <Container maxWidth={false}>
+      
       <Grid
           container
           spacing={3}
@@ -116,8 +207,10 @@ return null
 <Grid item xs={12} spacing={4}>
       <Paper className={classes.paper}>
       <ReportSearchForm 
-      misTypes = {misTypes}
-      interval = {interval}
+      // misTypes = {misTypes}
+      // interval = {interval}
+      misTypes = {[]}
+      interval = {[]}
       onSubmitForm={onResponceParamteresChanged}
       />
       </Paper>
@@ -135,9 +228,9 @@ return null
     data={totalByType}/>
     </Grid>
     </Grid>
-      </Container>
+    
 
-    </Box>
+    </Container>
       }
  
       </div>

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: '1 1 auto',
     height: '100%',
-    overflow: 'auto'
+    overflow: 'hidden'
   }
 }));
 
