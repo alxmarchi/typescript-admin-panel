@@ -129,10 +129,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 400,
-  },
+  }
 }));
 
 
@@ -143,7 +140,6 @@ const [misTypes, setMisTypes] = useState<RequestTypeResult[]>([{id:"", displayNa
 const [interval, setInterval] = useState<RequestTypeResult[]>([{id:"", displayName: "",}])  
 const [chartData, setChartData] = useState<ChartValue[]>([]);
 const [misTarget, setMisTarget] = useState<string[]>([]);
-const [data, setData] = useState<QueryResult[]>([]);
 const [totalByType, setTotalByType] = useState<PieChartValue[]>([]);
 
 useEffect(() => {
@@ -168,11 +164,7 @@ useEffect(() => {
 
   alert(JSON.stringify(values, null, 2));
 
-  const data = await fetchData(values);
-
-  setData(data)
-
- console.log(data)
+const data = await fetchData(values);
  
  const mappedTarget = targetMapping(target)
 
@@ -228,8 +220,6 @@ return null
     data={totalByType}/>
     </Grid>
     </Grid>
-    
-
     </Container>
       }
  

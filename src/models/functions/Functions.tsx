@@ -15,6 +15,11 @@ export type PropsFormType = {
     interval: RequestTypeResult[]
   }
 
+  export type SettingsFormType = {
+    onSubmitForm: (adress: string, port: string) => void,
+    
+  }
+
 export type chartType = {
   data : ChartValue[]  | undefined, 
   target: string []

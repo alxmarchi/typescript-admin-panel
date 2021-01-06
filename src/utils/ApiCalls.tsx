@@ -4,7 +4,12 @@ import { BASE_BILLING_ADRESS, BASE_HANDBOOK_ADRESS } from "./../service/config";
 
 export const fetchData: fetchDataType = async (searchParams) => {
   
+  console.log(window.localStorage.getItem('BILLING_ADRESS'))
+ //const BILLING_ADRESS = JSON.parse(window.localStorage.getItem('BILLING_ADRESS') || '{}');
+ const BILLING_ADRESS = window.localStorage.getItem('BILLING_ADRESS')?.toString;
   const url = new URL (BASE_BILLING_ADRESS);
+ 
+  const url2 = new URL (BILLING_ADRESS);
 
   const { target } = searchParams;
 console.log(searchParams);

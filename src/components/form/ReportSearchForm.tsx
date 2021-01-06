@@ -67,6 +67,7 @@ export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm, misTyp
               value={values.from}
               component={KeyboardDatePicker}
               className={classes.formControl}
+              variant="outlined"
               format="dd/MM/yyyy"
               onChange={(date: Date) =>
                 setFieldValue("from", date?.toISOString().slice(0, 10), false)
@@ -79,6 +80,7 @@ export const ReportSearchForm: React.FC<PropsFormType> = ({ onSubmitForm, misTyp
               value={values.to}
               component={KeyboardDatePicker}
               className={classes.formControl}
+              variant="outlined"
               format="dd/MM/yyyy"
               onChange={(date: Date) =>
                 setFieldValue("to", date?.toISOString().slice(0, 10), false)

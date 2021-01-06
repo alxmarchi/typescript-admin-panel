@@ -27,7 +27,7 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/app/settings',
+    href: '/settings',
     icon: SettingsIcon,
     title: 'Settings'
   }
