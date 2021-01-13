@@ -6,10 +6,14 @@ export const fetchData: fetchDataType = async (searchParams) => {
   
   console.log(window.localStorage.getItem('BILLING_ADRESS'))
  //const BILLING_ADRESS = JSON.parse(window.localStorage.getItem('BILLING_ADRESS') || '{}');
- const BILLING_ADRESS = window.localStorage.getItem('BILLING_ADRESS')?.toString;
-  const url = new URL (BASE_BILLING_ADRESS);
  
-  const url2 = new URL (BILLING_ADRESS);
+ 
+ const BILLING_ADRESS_FROM_LS = localStorage.getItem('BILLING_ADRESS');
+ const BILLING_ADRESS = BILLING_ADRESS_FROM_LS !== null ? BILLING_ADRESS_FROM_LS : BASE_BILLING_ADRESS;
+
+ const url = new URL (BILLING_ADRESS);
+ 
+ // const url2 = new URL (BILLING_ADRESS || BASE_BILLING_ADRESS);
 
   const { target } = searchParams;
 console.log(searchParams);
