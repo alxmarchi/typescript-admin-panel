@@ -1,44 +1,23 @@
 import React from "react";
-import { Formik, Field, Form } from "formik";
-import { RequestValuesType } from "../../models/objects/RequestValues";
-import { PropsFormType, SettingsFormType } from "../../models/functions/Functions";
+import { Formik, Form } from "formik";
+import { SettingsFormType } from "../../models/functions/Functions";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-import Input from "@material-ui/core/Input";
-import { KeyboardDatePicker } from "@material-ui/pickers";
-import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, CardHeader, Divider, OutlinedInput, TextField } from "@material-ui/core";
-import { BILLING_HOSTNAME, BILLING_PORT } from "../../service/config";
+import { BILLING_HOSTNAME } from "../../service/config";
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-      // margin-left: theme.spacing(0),
-  
-      marginLeft: 15,
-      marginRight: 15,
-      minWidth: 120,
-      // maxWidth: 300,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(1),
-    },
-  }));
+
 
 export const SettingsForm: React.FC<SettingsFormType> = ({ onSubmitForm}) => {
- const classes = useStyles();
+
 
   const initialValues = {
     adress: "", 
     port: ""
   };
 
-//   const submit = (adress, port) => {
-//     onSubmitForm(adress, port);
-//   };
     
     return (
         <Formik
@@ -50,8 +29,6 @@ export const SettingsForm: React.FC<SettingsFormType> = ({ onSubmitForm}) => {
         errors,
         handleChange,
         handleSubmit,
-        setFieldValue,
-        setFieldError,
       }) => (
         <Form>
           {/* <Box display="flex">

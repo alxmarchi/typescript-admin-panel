@@ -1,7 +1,7 @@
 import { Container, Grid, makeStyles, Paper } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { SettingsForm } from '../../components/form/SettingsForm';
-import { BILLING_HOSTNAME, BILLING_PORT, PROTOCOL, BILLING_PATHNAME, BASE_BILLING_ADRESS } from "../../service/config";
+import { PROTOCOL, BILLING_PATHNAME} from "../../service/config";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +29,8 @@ console.log('newBillingAdress')
 const newBillingAdress = PROTOCOL+adress+":"+port + '/' + BILLING_PATHNAME
 console.log(newBillingAdress)
 window.localStorage.setItem("BILLING_ADRESS", newBillingAdress)
+const newHandbookAdress = PROTOCOL+adress+":"+port + '/' + BILLING_PATHNAME
+window.localStorage.setItem("HANDBOOK_ADRESS", newHandbookAdress)
     } 
 
     return (

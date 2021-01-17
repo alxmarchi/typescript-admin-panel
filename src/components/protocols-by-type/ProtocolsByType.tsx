@@ -28,8 +28,6 @@ const ProtocolsByType : React.FC<PieChartType> = ({data}) => {
 
   const classes = useStyles();
 
-  const theme = useTheme();
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

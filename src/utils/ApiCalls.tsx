@@ -1,17 +1,34 @@
+import { Message } from "../models/objects/Message";
+import { QueryResult } from "../models/objects/QueryResult";
 import { fetchDataType, ExecuteType } from "./../models/functions/Functions";
 import { BASE_BILLING_ADRESS, BASE_HANDBOOK_ADRESS } from "./../service/config";
 
 
+const getAdressStringForUrl = () => {
+  console.log(window.localStorage.getItem('BILLING_ADRESS'))
+
+
+
+  const billingAdressFromLocalStorage = sessionStorage.getItem('BILLING_ADRESS');
+  const billingAdressForFetch = billingAdressFromLocalStorage !== null ? billingAdressFromLocalStorage : BASE_BILLING_ADRESS;
+
+  const handbookAdressFromLocalStorage = sessionStorage.getItem('HANDBOOK_ADRESS');
+  const handbookAdressForFetch = handbookAdressFromLocalStorage !== null ? handbookAdressFromLocalStorage : BASE_HANDBOOK_ADRESS;
+
+  const adress = {
+    billing: billingAdressForFetch,
+    handbook: handbookAdressForFetch,
+  };
+
+  return adress;
+}
+
 export const fetchData: fetchDataType = async (searchParams) => {
   
-  console.log(window.localStorage.getItem('BILLING_ADRESS'))
- //const BILLING_ADRESS = JSON.parse(window.localStorage.getItem('BILLING_ADRESS') || '{}');
- 
- 
- const BILLING_ADRESS_FROM_LS = localStorage.getItem('BILLING_ADRESS');
- const BILLING_ADRESS = BILLING_ADRESS_FROM_LS !== null ? BILLING_ADRESS_FROM_LS : BASE_BILLING_ADRESS;
+  
+ const billingAdress = getAdressStringForUrl().billing;
 
- const url = new URL (BILLING_ADRESS);
+ const url = new URL (billingAdress);
  
  // const url2 = new URL (BILLING_ADRESS || BASE_BILLING_ADRESS);
 
@@ -41,11 +58,16 @@ else
 
     console.log(url.toString())
 
- const responce = await fetch(url.toString())
-    .then((response) => response.json())
+ const responce : Promise<Message<QueryResult[]>> = fetch(url.toString())
+ 
+    .then((response) => 
+      response.json())
+     
     .catch((e) => console.log(e));
 
-    return responce.data
+    console.log(responce)
+
+    return (await responce).data
 };
 
 export const getMisTypes  = async () => {
@@ -64,12 +86,15 @@ export const getIntervals  = async () => {
 
 const getParamsForRequest : ExecuteType = async ( type ) => {
   
+  const handbookAdress = getAdressStringForUrl().handbook;
+
   const url = new URL (BASE_HANDBOOK_ADRESS);
 url.searchParams.append("type", type);
 
   const responce = await fetch(url.toString())
   .then((response) => response.json())
   .catch((e) => console.log(e));
+console.log(responce.data)
 
   return responce
 

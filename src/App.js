@@ -1,6 +1,5 @@
 
-import React, {useState, useEffect} from 'react';
-import { useRoutes } from 'react-router-dom';
+import React, {useEffect} from 'react';
 import { ThemeProvider } from '@material-ui/core';
 import GlobalStyles from './GlobalStyles';
 import theme from './theme';
@@ -11,7 +10,7 @@ import DashboardLayout from './layouts/DashboardLayout/index';
 import {Route, Switch} from 'react-router-dom'
 import Dashboard from './containers/Dashboard/Dashboard'
 import Settings from './containers/Settings/Settings'
-import { BILLING_HOSTNAME, BILLING_PORT, PROTOCOL, BILLING_PATHNAME, BASE_BILLING_ADRESS } from "./service/config";
+import { BASE_BILLING_ADRESS, BASE_HANDBOOK_ADRESS } from "./service/config";
 
 function App() {
   // const routing = useRoutes(routes);
@@ -19,7 +18,10 @@ function App() {
   //const [hostName, setHostName] = useState(initialState);
 
 
-  useEffect(() => window.localStorage.setItem("BILLING_ADRESS", BASE_BILLING_ADRESS), );
+  useEffect(() => {
+    window.sessionStorage.setItem("BILLING_ADRESS", BASE_BILLING_ADRESS);
+    sessionStorage.setItem('HANDBOOK_ADRESS', BASE_HANDBOOK_ADRESS);
+  }, []);
  
   return (
     <ThemeProvider theme={theme}>
